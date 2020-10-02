@@ -1,35 +1,47 @@
-﻿using AlgorithmsLibrary.Algorithms;
+﻿using AlgorithmsLibrary;
+using AlgorithmsLibrary.Algorithms;
 using System;
+using System.Linq;
+using System.Timers;
+
 
 namespace SortingAlgorithms
 {
     class Program
     {
-        static void InputFunc(int [] arr)
-        {
-            for(int i = 0; i < arr.Length; ++i)
-            {
-                Console.Write(arr[i] + " ");
-            }
-        }
+        
+
         static void Main(string[] args)
         {
-            Console.WriteLine("Enter dimension of array:");
-            string input = Console.ReadLine();
-            int number = int.Parse(input);
 
-            int[] Array = new int[number];
-            Console.WriteLine("Enter numbers for array:");
-            for(int i = 0; i < number; ++i)
-            {
-                Console.Write($"Array[{i}]:");
-                input = Console.ReadLine();
-                Array[i] = int.Parse(input);
-            }
+            //!!!!-------Manual inputting----!!!!!
 
+            ArrayItem arrayItem = new ArrayItem();
+            arrayItem.InputFunc();
+            arrayItem.DeleteMaxAndMin();
+            Console.WriteLine("--------------Initial Array--------------");
+            arrayItem.OutputFunc();
+
+
+            Console.WriteLine("--------------Bubble sort--------------");
             BubbleSort bubble = new BubbleSort();
-            bubble.bubbleSort(ref Array);
-            InputFunc(Array);
+            var watch = new System.Diagnostics.Stopwatch();
+            watch.Start();
+            bubble.bubbleSort(ref arrayItem.Array);
+            watch.Stop();
+            Console.WriteLine($"-Execution Time: {watch.ElapsedMilliseconds} ms-\n");
+            arrayItem.OutputFunc();
+
+
+
+            Console.WriteLine("--------------Selection sort--------------");
+            SelectionSort selection = new SelectionSort();
+            watch = new System.Diagnostics.Stopwatch();
+            watch.Start();
+            selection.selectionSort(ref arrayItem.Array);
+            watch.Stop();
+            Console.WriteLine($"Execution Time: {watch.ElapsedMilliseconds} ms\n");
+            arrayItem.OutputFunc();
         }
     }
 }
